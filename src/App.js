@@ -1,25 +1,57 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
-import './App.css';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { simpleAction } from './actions/simpleAction';
+
+const styles = theme => ({
+  appBar: {
+    position: 'relative',
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    background: 'white',
+  },
+});
 
 class App extends Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload
-        </p>
-        <pre>{JSON.stringify(this.props)}</pre>
-        <button onClick={() => this.props.simpleAction()}>
-          Test redux action
-        </button>
-      </div>
+      <React.Fragment>
+        <CssBaseline />
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="title" color="inherit" noWrap>
+              Github Feed
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.wrapper}>
+          <div className={classes.layout}>
+            <pre>{JSON.stringify(this.props)}</pre>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.simpleAction()}
+            >
+              Test redux action
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
@@ -34,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(withStyles(styles)(App));
