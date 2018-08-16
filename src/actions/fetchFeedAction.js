@@ -1,6 +1,3 @@
-import fetch from 'cross-fetch';
-import { func } from 'prop-types';
-
 export const REQUEST_FEED = 'REQUEST_FEED';
 function requestFeed(user, page) {
   return {
@@ -12,7 +9,6 @@ function requestFeed(user, page) {
 
 export const RECEIVE_FEED = 'RECEIVE_FEED';
 function receiveFeed(user, json) {
-  console.log(json);
   return {
     type: RECEIVE_FEED,
     user,
@@ -21,7 +17,7 @@ function receiveFeed(user, json) {
 }
 
 export const RECEIVE_ERROR = 'RECEIVE_ERROR';
-export function receiveError(user) {
+function receiveError(user) {
   return {
     type: RECEIVE_ERROR,
     user,
@@ -43,32 +39,16 @@ export function fetchFeedNewPageAction() {
 }
 
 function fetchFeedActionHelper(dispatch, { user, page }) {
-  // First dispatch: the app state is updated to inform
-  // that the API call is starting.
-
   dispatch(requestFeed(user, page));
-
-  // The function called by the thunk middleware can return a value,
-  // that is passed on as the return value of the dispatch method.
-
-  // In this case, we return a promise to wait for.
-  // This is not required by thunk middleware, but it is convenient for us.
-
   return fetch(
     `https://api.github.com/users/${user}/events/public?page=${page}`
   )
-    .then(
-      response => response.json(),
-      // Do not use catch, because that will also catch
-      // any errors in the dispatch and resulting render,
-      // causing a loop of 'Unexpected batch number' errors.
-      // https://github.com/facebook/react/issues/6895
-      error => console.log('An error occurred.', error)
-    )
-    .then(
-      json =>
-        // We can dispatch many times!
-        // Here, we update the app state with the results of the API call.
-        console.log(json) | dispatch(receiveFeed(user, json))
-    );
+    .then(response => response.json(), error => dispatch(receiveError(user)))
+    .then(json => {
+      if (json.message) {
+        dispatch(receiveError(user));
+      } else {
+        dispatch(receiveFeed(user, json));
+      }
+    });
 }
