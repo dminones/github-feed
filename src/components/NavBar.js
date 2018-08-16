@@ -35,7 +35,7 @@ const NavBar = ({ classes, fetchFeed }) => (
           onRequestSearch={text => fetchFeed(text)}
           style={{
             margin: '0 auto',
-            maxWidth: 1000,
+            maxWidth: '70%',
           }}
         />
       </Toolbar>
