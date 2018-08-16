@@ -7,7 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { simpleAction } from './actions/simpleAction';
+import { fetchFeedAction } from './actions/fetchFeedAction';
+import FeedItem from './components/FeedItem';
 
 const styles = theme => ({
   appBar: {
@@ -18,17 +19,27 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
+      width: 800,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
     background: 'white',
+    textAlign: 'center',
+    padding: '20px 0px',
+  },
+  button: {
+    margin: '0 5px',
+  },
+  items: {
+    padding: '20px',
   },
 });
 
 class App extends Component {
   render() {
-    const { classes } = this.props;
+    console.log(this.props);
+    const { classes, fetchFeedReducer } = this.props;
+    const { items = [] } = fetchFeedReducer;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -37,18 +48,31 @@ class App extends Component {
             <Typography variant="title" color="inherit" noWrap>
               Github Feed
             </Typography>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => this.props.fetchFeed('dminones')}
+            >
+              Get Feed
+            </Button>
           </Toolbar>
         </AppBar>
         <div className={classes.wrapper}>
           <div className={classes.layout}>
-            <pre>{JSON.stringify(this.props)}</pre>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => this.props.simpleAction()}
-            >
-              Test redux action
-            </Button>
+            <div className={classes.items}>
+              {items.map(item => (
+                <FeedItem item={item} />
+              ))}
+            </div>
+            {items.length > 0 && (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Load More
+              </Button>
+            )}
           </div>
         </div>
       </React.Fragment>
@@ -60,7 +84,7 @@ const mapStateToProps = state => ({
   ...state,
 });
 const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction()),
+  fetchFeed: user => dispatch(fetchFeedAction(user)),
 });
 
 export default connect(

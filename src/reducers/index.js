@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './simpleReducer';
+import fetchFeedReducer from './fetchFeedReducer';
+
 export default combineReducers({
-  simpleReducer,
+  fetchFeedReducer,
 });
