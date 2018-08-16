@@ -32,17 +32,24 @@ const styles = theme => ({
   },
 });
 
-const FeedList = ({ classes, items, isFetching, fetchFeedNewPage }) => {
-  if (!items) {
+const FeedList = ({
+  classes,
+  items,
+  isFetching,
+  isLastPage,
+  fetchFeedNewPage,
+}) => {
+  const emptyList = !items || items.length <= 0;
+  if (isFetching && emptyList) {
+    return <div className={classes.message}>Loading...</div>;
+  }
+
+  if (emptyList) {
     return (
       <div className={classes.message}>
         Theres is no events, please search for a user on the topbar
       </div>
     );
-  }
-
-  if (isFetching && (!items || items.length <= 0)) {
-    return <div className={classes.message}>Loading...</div>;
   }
 
   return (
@@ -51,17 +58,18 @@ const FeedList = ({ classes, items, isFetching, fetchFeedNewPage }) => {
         <FeedItem item={item} />
       ))}
 
-      {items.length > 0 && (
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          disabled={isFetching}
-          onClick={() => fetchFeedNewPage()}
-        >
-          Load More
-        </Button>
-      )}
+      {items.length > 0 &&
+        !isLastPage && (
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={isFetching}
+            onClick={() => fetchFeedNewPage()}
+          >
+            Load More
+          </Button>
+        )}
     </div>
   );
 };

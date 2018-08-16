@@ -3,6 +3,7 @@ import {
   REQUEST_FEED,
   RECEIVE_FEED,
 } from '../actions/fetchFeedAction';
+import Constants from '../Constants';
 
 function posts(state, action) {
   switch (action.type) {
@@ -25,6 +26,7 @@ function posts(state, action) {
         didInvalidate: false,
         items: [...state.items, ...action.feed],
         user: action.user,
+        isLastPage: action.feed.length < Constants.PER_PAGE,
       });
     default:
       return state;
@@ -37,6 +39,7 @@ function fetchFeedReducer(
     didInvalidate: false,
     items: [],
     page: 1,
+    isLastPage: false,
   },
   action
 ) {

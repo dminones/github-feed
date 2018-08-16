@@ -1,3 +1,4 @@
+import Constants from '../Constants';
 export const REQUEST_FEED = 'REQUEST_FEED';
 function requestFeed(user, page) {
   return {
@@ -41,7 +42,9 @@ export function fetchFeedNewPageAction() {
 function fetchFeedActionHelper(dispatch, { user, page }) {
   dispatch(requestFeed(user, page));
   return fetch(
-    `https://api.github.com/users/${user}/events/public?page=${page}`
+    `https://api.github.com/users/${user}/events/public?page=${page}&per_page=${
+      Constants.PER_PAGE
+    }`
   )
     .then(response => response.json(), error => dispatch(receiveError(user)))
     .then(json => {

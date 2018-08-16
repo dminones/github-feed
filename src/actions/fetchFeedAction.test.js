@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
-
+import Constants from '../Constants';
 import * as actions from './fetchFeedAction';
 
 const middlewares = [thunk];
@@ -17,7 +17,9 @@ describe('async actions', () => {
     const user = 'dminones';
     const page = 1;
     fetchMock.getOnce(
-      `https://api.github.com/users/${user}/events/public?page=${page}`,
+      `https://api.github.com/users/${user}/events/public?page=${page}&per_page=${
+        Constants.PER_PAGE
+      }`,
       {
         body: [],
         headers: { 'content-type': 'application/json' },
@@ -41,7 +43,9 @@ describe('async actions', () => {
     const page = 2;
     const feed = [3, 4];
     fetchMock.getOnce(
-      `https://api.github.com/users/${user}/events/public?page=${page}`,
+      `https://api.github.com/users/${user}/events/public?page=${page}&per_page=${
+        Constants.PER_PAGE
+      }`,
       {
         body: feed,
         headers: { 'content-type': 'application/json' },
@@ -70,7 +74,9 @@ describe('async actions', () => {
     const user = 'unexistent';
     const page = 1;
     fetchMock.getOnce(
-      `https://api.github.com/users/${user}/events/public?page=${page}`,
+      `https://api.github.com/users/${user}/events/public?page=${page}&per_page=${
+        Constants.PER_PAGE
+      }`,
       {
         body: {
           message: 'Not Found',

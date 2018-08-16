@@ -1,11 +1,13 @@
 import fetchFeedReducer from './fetchFeedReducer';
 import * as types from '../actions/fetchFeedAction';
+import Constants from '../Constants';
 
 const initialState = {
   isFetching: false,
   didInvalidate: false,
   items: [],
   page: 1,
+  isLastPage: false,
 };
 
 describe('fetchFeedReducer', () => {
@@ -49,26 +51,28 @@ describe('fetchFeedReducer', () => {
         user,
         page,
       })
-    ).toEqual({
-      isFetching: true,
-      didInvalidate: false,
-      items: [],
-      page,
-      user,
-    });
+    ).toEqual(
+      Object.assign({}, initialState, {
+        isFetching: true,
+        didInvalidate: false,
+        items: [],
+        page,
+        user,
+      })
+    );
   });
 
   it('should handle RECEIVE_FEED', () => {
     const user = 'dminones',
-      items = [2];
+      items = new Array(Constants.PER_PAGE);
     expect(
-      fetchFeedReducer(undefined, {
+      fetchFeedReducer(initialState, {
         type: types.RECEIVE_FEED,
         user,
         feed: items,
       })
     ).toEqual(
-      Object.assign(initialState, {
+      Object.assign({}, initialState, {
         isFetching: false,
         items,
         user,
@@ -76,19 +80,40 @@ describe('fetchFeedReducer', () => {
     );
   });
 
-  it('should handle RECEIVE_FEED adding items when is a new page', () => {
-    const user = 'dminones';
+  it('should handle RECEIVE_FEED adding items', () => {
+    const user = 'dminones',
+      items = new Array(Constants.PER_PAGE);
     expect(
-      fetchFeedReducer(Object.assign(initialState, { items: [1] }), {
+      fetchFeedReducer(Object.assign({}, initialState, { items: [1] }), {
         type: types.RECEIVE_FEED,
         user,
-        feed: [2],
+        feed: items,
       })
     ).toEqual(
-      Object.assign(initialState, {
+      Object.assign({}, initialState, {
         isFetching: false,
-        items: [1, 2],
+        items: [1, ...items],
         user,
+      })
+    );
+  });
+
+  it('should handle RECEIVE_FEED when is last page', () => {
+    const user = 'dminones',
+      items = new Array(Constants.PER_PAGE - 10);
+    console.log(initialState);
+    expect(
+      fetchFeedReducer(initialState, {
+        type: types.RECEIVE_FEED,
+        user,
+        feed: items,
+      })
+    ).toEqual(
+      Object.assign({}, initialState, {
+        isFetching: false,
+        items: items,
+        user,
+        isLastPage: true,
       })
     );
   });
