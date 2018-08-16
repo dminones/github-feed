@@ -33,7 +33,6 @@ const styles = theme => ({
   actor: {
     textAlign: 'left',
     padding: '20px',
-    background: 'red',
     background: '#4059b5',
     color: 'white',
     fontWeight: 'bold',
@@ -63,11 +62,16 @@ const FeedList = ({
   items,
   isFetching,
   isLastPage,
+  didInvalidate,
   fetchFeedNewPage,
 }) => {
   const emptyList = !items || items.length <= 0;
   if (isFetching && emptyList) {
     return <div className={classes.message}>Loading...</div>;
+  }
+
+  if (didInvalidate) {
+    return <div className={classes.message}>There isn't such username</div>;
   }
 
   if (emptyList) {

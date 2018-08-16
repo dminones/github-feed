@@ -11,6 +11,7 @@ function posts(state, action) {
       return Object.assign({}, state, {
         didInvalidate: true,
         user: action.user,
+        isFetching: false,
       });
     case REQUEST_FEED:
       return Object.assign({}, state, {

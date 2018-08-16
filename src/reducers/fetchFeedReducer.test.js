@@ -101,7 +101,6 @@ describe('fetchFeedReducer', () => {
   it('should handle RECEIVE_FEED when is last page', () => {
     const user = 'dminones',
       items = new Array(Constants.PER_PAGE - 10);
-    console.log(initialState);
     expect(
       fetchFeedReducer(initialState, {
         type: types.RECEIVE_FEED,
@@ -114,6 +113,22 @@ describe('fetchFeedReducer', () => {
         items: items,
         user,
         isLastPage: true,
+      })
+    );
+  });
+
+  it('should handle RECEIVE_ERROR', () => {
+    const user = 'dminones';
+    expect(
+      fetchFeedReducer(initialState, {
+        type: types.RECEIVE_ERROR,
+        user,
+      })
+    ).toEqual(
+      Object.assign({}, initialState, {
+        isFetching: false,
+        didInvalidate: true,
+        user,
       })
     );
   });
