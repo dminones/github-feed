@@ -4,17 +4,7 @@ import {
   RECEIVE_FEED,
 } from '../actions/fetchFeedAction';
 
-function posts(
-  state = {
-    isFetching: false,
-    didInvalidate: false,
-    items: [],
-    page: 1,
-  },
-  action
-) {
-  console.log('STATE', state);
-  console.log('action', action);
+function posts(state, action) {
   switch (action.type) {
     case RECEIVE_ERROR:
       return Object.assign({}, state, {
@@ -34,7 +24,6 @@ function posts(
         isFetching: false,
         didInvalidate: false,
         items: [...state.items, ...action.feed],
-        lastUpdated: action.receivedAt,
         user: action.user,
       });
     default:
@@ -42,7 +31,15 @@ function posts(
   }
 }
 
-function fetchFeedReducer(state = {}, action) {
+function fetchFeedReducer(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: [],
+    page: 1,
+  },
+  action
+) {
   switch (action.type) {
     case RECEIVE_ERROR:
     case RECEIVE_FEED:
