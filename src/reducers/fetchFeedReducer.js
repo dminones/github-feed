@@ -9,9 +9,12 @@ function posts(
     isFetching: false,
     didInvalidate: false,
     items: [],
+    page: 1,
   },
   action
 ) {
+  console.log('STATE', state);
+  console.log('action', action);
   switch (action.type) {
     case RECEIVE_ERROR:
       return Object.assign({}, state, {
@@ -23,12 +26,14 @@ function posts(
         isFetching: true,
         didInvalidate: false,
         user: action.user,
+        items: action.user === state.user ? state.items : [],
+        page: action.page,
       });
     case RECEIVE_FEED:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.feed,
+        items: [...state.items, ...action.feed],
         lastUpdated: action.receivedAt,
         user: action.user,
       });
@@ -42,7 +47,7 @@ function fetchFeedReducer(state = {}, action) {
     case RECEIVE_ERROR:
     case RECEIVE_FEED:
     case REQUEST_FEED:
-      return Object.assign({}, state, posts(state[action.user], action));
+      return Object.assign({}, state, posts(state, action));
     default:
       return state;
   }

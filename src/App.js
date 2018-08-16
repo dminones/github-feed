@@ -39,7 +39,8 @@ class App extends Component {
   render() {
     console.log(this.props);
     const { classes, fetchFeedReducer } = this.props;
-    const { items = [] } = fetchFeedReducer;
+    const { items = [], page } = fetchFeedReducer;
+    console.log('fetchFeedReducer', fetchFeedReducer);
     return (
       <React.Fragment>
         <CssBaseline />
@@ -69,6 +70,7 @@ class App extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick={() => this.props.fetchFeed('dminones', page + 1)}
               >
                 Load More
               </Button>
@@ -84,7 +86,7 @@ const mapStateToProps = state => ({
   ...state,
 });
 const mapDispatchToProps = dispatch => ({
-  fetchFeed: user => dispatch(fetchFeedAction(user)),
+  fetchFeed: (user, page) => dispatch(fetchFeedAction(user, page)),
 });
 
 export default connect(
