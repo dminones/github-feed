@@ -30,7 +30,33 @@ const styles = theme => ({
     margin: '100px 50px',
     fontSize: '18px',
   },
+  actor: {
+    textAlign: 'left',
+    padding: '20px',
+    background: 'red',
+    background: '#4059b5',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  actorAvatar: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '10px',
+    verticalAlign: 'middle',
+    marginRight: '5px',
+  },
 });
+
+const Actor = ({ actor, classes }) => (
+  <div className={classes.actor}>
+    <img
+      src={actor.avatar_url}
+      alt={actor.display_login}
+      className={classes.actorAvatar}
+    />
+    {actor.display_login}
+  </div>
+);
 
 const FeedList = ({
   classes,
@@ -52,14 +78,18 @@ const FeedList = ({
     );
   }
 
-  return (
-    <div className={classes.items}>
-      {items.map(item => (
-        <FeedItem item={item} />
-      ))}
+  const [{ actor }] = items;
+  console.log('FIRST', actor);
 
-      {items.length > 0 &&
-        !isLastPage && (
+  return (
+    <div>
+      <Actor actor={actor} classes={classes} />
+      <div className={classes.items}>
+        {items.map(item => (
+          <FeedItem key={item.id} item={item} />
+        ))}
+
+        {!isLastPage && (
           <Button
             variant="contained"
             color="primary"
@@ -70,6 +100,7 @@ const FeedList = ({
             Load More
           </Button>
         )}
+      </div>
     </div>
   );
 };
