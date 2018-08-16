@@ -14,7 +14,7 @@ const styles = {
 };
 
 const RepoLink = ({ classes, repo }) => (
-  <a href={repo.url} className={classes.link}>
+  <a href={repo.url} className={classes.link} target="_blank">
     {repo.name}
   </a>
 );

@@ -6,8 +6,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import SearchBar from 'material-ui-search-bar';
 
-import { fetchFeedAction } from './actions/fetchFeedAction';
+import {
+  fetchFeedAction,
+  fetchFeedNewPageAction,
+} from './actions/fetchFeedAction';
 import FeedItem from './components/FeedItem';
 
 const styles = theme => ({
@@ -27,6 +31,12 @@ const styles = theme => ({
     textAlign: 'center',
     padding: '20px 0px',
   },
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flexGrow: 1,
+  },
   button: {
     margin: '0 5px',
   },
@@ -44,20 +54,27 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="title" color="inherit" noWrap>
-              Github Feed
-            </Typography>
-            <Button
-              variant="contained"
-              className={classes.button}
-              onClick={() => this.props.fetchFeed('dminones')}
-            >
-              Get Feed
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <div className={classes.root}>
+          <AppBar position="static" className={classes.appBar}>
+            <Toolbar>
+              <Typography
+                variant="title"
+                color="inherit"
+                noWrap
+                className={classes.flex}
+              >
+                Github Feed
+              </Typography>
+              <SearchBar
+                onRequestSearch={text => this.props.fetchFeed(text)}
+                style={{
+                  margin: '0 auto',
+                  maxWidth: 1000,
+                }}
+              />
+            </Toolbar>
+          </AppBar>
+        </div>
         <div className={classes.wrapper}>
           <div className={classes.layout}>
             <div className={classes.items}>
@@ -70,7 +87,7 @@ class App extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={() => this.props.fetchFeed('dminones', page + 1)}
+                onClick={() => this.props.fetchFeedNewPage()}
               >
                 Load More
               </Button>
@@ -87,6 +104,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   fetchFeed: (user, page) => dispatch(fetchFeedAction(user, page)),
+  fetchFeedNewPage: () => dispatch(fetchFeedNewPageAction()),
 });
 
 export default connect(
