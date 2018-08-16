@@ -26,13 +26,23 @@ const styles = theme => ({
   items: {
     padding: '20px',
   },
+  message: {
+    margin: '100px 50px',
+    fontSize: '18px',
+  },
 });
 
-const FeedList = ({ classes, items, fetchFeedNewPage }) => {
+const FeedList = ({ classes, items, isFetching, fetchFeedNewPage }) => {
   if (!items) {
     return (
-      <div>Theres is no events, please search for a user on the topbar</div>
+      <div className={classes.message}>
+        Theres is no events, please search for a user on the topbar
+      </div>
     );
+  }
+
+  if (isFetching && (!items || items.length <= 0)) {
+    return <div className={classes.message}>Loading...</div>;
   }
 
   return (
@@ -46,6 +56,7 @@ const FeedList = ({ classes, items, fetchFeedNewPage }) => {
           variant="contained"
           color="primary"
           className={classes.button}
+          disabled={isFetching}
           onClick={() => fetchFeedNewPage()}
         >
           Load More
@@ -57,15 +68,14 @@ const FeedList = ({ classes, items, fetchFeedNewPage }) => {
 
 const Feed = props => {
   const { classes, fetchFeedNewPage, fetchFeedReducer } = props;
-  const { items } = fetchFeedReducer;
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.layout}>
         <FeedList
-          items={items}
           classes={classes}
           fetchFeedNewPage={fetchFeedNewPage}
+          {...fetchFeedReducer}
         />
       </div>
     </div>

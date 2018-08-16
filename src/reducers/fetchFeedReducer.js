@@ -26,7 +26,7 @@ function posts(
         isFetching: true,
         didInvalidate: false,
         user: action.user,
-        items: action.user === state.user ? state.items : [],
+        items: action.page > 1 ? state.items : [],
         page: action.page,
       });
     case RECEIVE_FEED:
