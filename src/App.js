@@ -2,22 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import SearchBar from 'material-ui-search-bar';
 
-import {
-  fetchFeedAction,
-  fetchFeedNewPageAction,
-} from './actions/fetchFeedAction';
+import NavBar from './components/NavBar';
+
+import { fetchFeedNewPageAction } from './actions/fetchFeedAction';
 import FeedItem from './components/FeedItem';
 
 const styles = theme => ({
-  appBar: {
-    position: 'relative',
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
@@ -31,12 +23,6 @@ const styles = theme => ({
     textAlign: 'center',
     padding: '20px 0px',
   },
-  root: {
-    flexGrow: 1,
-  },
-  flex: {
-    flexGrow: 1,
-  },
   button: {
     margin: '0 5px',
   },
@@ -49,32 +35,12 @@ class App extends Component {
   render() {
     console.log(this.props);
     const { classes, fetchFeedReducer } = this.props;
-    const { items = [], page } = fetchFeedReducer;
+    const { items = [] } = fetchFeedReducer;
     console.log('fetchFeedReducer', fetchFeedReducer);
     return (
       <React.Fragment>
         <CssBaseline />
-        <div className={classes.root}>
-          <AppBar position="static" className={classes.appBar}>
-            <Toolbar>
-              <Typography
-                variant="title"
-                color="inherit"
-                noWrap
-                className={classes.flex}
-              >
-                Github Feed
-              </Typography>
-              <SearchBar
-                onRequestSearch={text => this.props.fetchFeed(text)}
-                style={{
-                  margin: '0 auto',
-                  maxWidth: 1000,
-                }}
-              />
-            </Toolbar>
-          </AppBar>
-        </div>
+        <NavBar />
         <div className={classes.wrapper}>
           <div className={classes.layout}>
             <div className={classes.items}>
@@ -103,7 +69,6 @@ const mapStateToProps = state => ({
   ...state,
 });
 const mapDispatchToProps = dispatch => ({
-  fetchFeed: (user, page) => dispatch(fetchFeedAction(user, page)),
   fetchFeedNewPage: () => dispatch(fetchFeedNewPageAction()),
 });
 
