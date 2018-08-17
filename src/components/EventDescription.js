@@ -22,7 +22,9 @@ const eventDescriptionText = item => {
           : ''
       }`;
     default:
-      return `${item.type} `;
+      return `${item.type
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .toLowerCase()} on `;
   }
 };
 
