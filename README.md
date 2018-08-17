@@ -23,7 +23,7 @@ npm test
 
 ## Github Events
 
-Github events has a similar JSON schema, but a unique payload object that is determined by its event type. See [Event Types & Payloads](https://developer.github.com/v3/activity/events/types/)
+All github events has a similar JSON schema, but a unique payload object that is determined by its event type. See [Event Types & Payloads](https://developer.github.com/v3/activity/events/types/)
 
 This app supports custom messages for most common event types, and handle with a default view other event types.
 
@@ -38,6 +38,15 @@ This app supports custom messages for most common event types, and handle with a
 ## About the App
 
 This app is built using [Create React App](https://github.com/facebook/create-react-app).
+
+### State Managment
+
+The app uses redux to mantain state.
+
+### App Laoyout and Styles
+
+Styles accross the app supported by material-ui withStyles HOC.  
+[Material UI](https://material-ui.com/) components are used for navbar, buttons and search bar.
 
 ## Github Pages Deploy
 
