@@ -1,5 +1,25 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-You can find the most recent version of the guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+# Github Feed
+
+React app that has an input box that you can enter a github user id and it shows you their last 30 public events.
+
+## Getting Started
+
+This app needs node and npm.
+
+### Install and run dev app
+
+```
+npm install
+npm start
+```
+
+### Testing
+
+Unit testing provided for redux actions and reducers.
+
+```
+npm test
+```
 
 ## Github Events
 
@@ -14,3 +34,12 @@ This app supports custom messages for most common event types, and handle with a
 - WatchEvent
 - PullRequestEvent
 - CreateEvent
+
+## About the App
+
+This app is built using [Create React App](https://github.com/facebook/create-react-app).
+
+## Github Pages Deploy
+
+The app is deployed on github pages, instructions about the deploy on create-react-app guide.  
+[https://dminones.github.io/github-feed/](https://dminones.github.io/github-feed/)
