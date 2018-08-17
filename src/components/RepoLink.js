@@ -14,7 +14,11 @@ const styles = {
 };
 
 const RepoLink = ({ classes, repo }) => (
-  <a href={repo.url} className={classes.link} target="_blank">
+  <a
+    href={`https://github.com/${repo.name}`}
+    className={classes.link}
+    target="_blank"
+  >
     {repo.name}
   </a>
 );
