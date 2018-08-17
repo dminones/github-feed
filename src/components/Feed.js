@@ -91,19 +91,18 @@ const FeedList = ({
         {items.map(item => (
           <FeedItem key={item.id} item={item} />
         ))}
-
-        {!isLastPage && (
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            disabled={isFetching}
-            onClick={() => fetchFeedNewPage()}
-          >
-            Load More
-          </Button>
-        )}
       </div>
+      {!isLastPage && (
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching}
+          onClick={() => fetchFeedNewPage()}
+        >
+          Load More
+        </Button>
+      )}
     </div>
   );
 };

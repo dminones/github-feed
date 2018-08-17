@@ -9,6 +9,9 @@ const styles = {
     padding: '15px 0px',
     textAlign: 'left',
     borderBottom: '1px solid #e0e0e0',
+    '&:last-child': {
+      borderBottom: 'none',
+    },
   },
   bullet: {
     display: 'inline-block',
