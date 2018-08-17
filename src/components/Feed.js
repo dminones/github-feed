@@ -77,7 +77,7 @@ const FeedList = ({
   if (emptyList) {
     return (
       <div className={classes.message}>
-        Theres is no events, please search for a user on the topbar
+        There are no events, please search for a user on the top bar
       </div>
     );
   }
