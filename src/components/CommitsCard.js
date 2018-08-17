@@ -29,7 +29,7 @@ const getBranch = payload => payload.ref.split('/').pop();
 
 const BranchLink = ({ branch, repo }) => (
   <a href={`https://github.com/${repo}/tree/${branch}`} target="blank">
-    branch
+    {branch}
   </a>
 );
 
