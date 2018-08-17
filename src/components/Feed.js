@@ -16,7 +16,6 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    background: 'white',
     textAlign: 'center',
     padding: '20px 0px',
   },

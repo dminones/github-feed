@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import FeedItemTitle from './FeedItemTitle';
+import CommitsCard from './CommitsCard';
 
 const styles = {
   card: {
-    minWidth: 275,
-    margin: '0px 0px 10px 0px',
+    padding: '15px 0px',
     textAlign: 'left',
+    borderBottom: '1px solid #e0e0e0',
   },
   bullet: {
     display: 'inline-block',
@@ -29,6 +30,7 @@ function FeedItem(props) {
   return (
     <div className={classes.card}>
       <FeedItemTitle item={item} />
+      <CommitsCard item={item} />
     </div>
   );
 }
